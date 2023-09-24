@@ -1,0 +1,3 @@
+[submodule "project/dependencies/openocd-esp32"]
+	path = project/dependencies/openocd-esp32
+	url = https://github.com/espressif/openocd-esp32.git

@@ -1,1 +1,5 @@
 .DS_Store
+.vscode
+project/build
+project/cmake-build-debug
+build
