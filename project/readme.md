@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-> For Windows users, make sure the shell you are using is either PowerShell, Git Bash or WSL. The default Windows Command Prompt is not supported.
+> For Windows users, make sure the shell you are using is either PowerShell, Git Bash or WSL. The default Windows
+> Command Prompt is not supported.
 
 ### Project Management
 
@@ -28,7 +29,8 @@ brew install cmake
 
 #### Cross-compilation toolchain
 
-To compile, build and debug the project, you also need to have `arm-none-eabi-gcc` and `openocd` installed with scoop(and only scoop because this package doesn't exist in the package index of Chocolatey or winget):
+To compile, build and debug the project, you also need to have `arm-none-eabi-gcc` and `openocd` installed with scoop(
+and only scoop because this package doesn't exist in the package index of Chocolatey or winget):
 
 ##### gcc-arm-none-eabi
 
@@ -39,7 +41,7 @@ scoop bucket add extras
 scoop install extras/gcc-arm-none-eabi
 ```
 
-macOS: 
+macOS:
 
 > **DON'T INSTALL gcc-arm-none-eabi DIRECTLY VIA BREW SINCE IT RESULTS IN BROKEN DEPENDENCIES**
 
@@ -49,7 +51,8 @@ brew install --cask gcc-arm-embedded
 
 ##### openocd
 
-The sourcecode of `openocd` is included as git submodule, so you can build it on your own with the [source code](dependencies/openocd-esp32)
+The sourcecode of `openocd` is included as git submodule, so you can build it on your own with
+the [source code](dependencies/openocd-esp32)
 
 openocd uses `make` as its building tool. Use the following command to install these prerequisites:
 
