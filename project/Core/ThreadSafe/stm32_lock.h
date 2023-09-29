@@ -62,13 +62,13 @@
 #define __STM32_LOCK_H__
 
 /* Includes ------------------------------------------------------------------*/
-#include <cmsis_compiler.h>
-#include <stddef.h>
 #include <stdint.h>
+#include <stddef.h>
+#include <cmsis_compiler.h>
 
 #ifndef STM32_THREAD_SAFE_STRATEGY
 #define STM32_THREAD_SAFE_STRATEGY 2 /**< Assume strategy 2 if not specified */
-#endif                               /* STM32_THREAD_SAFE_STRATEGY */
+#endif /* STM32_THREAD_SAFE_STRATEGY */
 
 #ifdef __cplusplus
 extern "C" {
@@ -79,32 +79,36 @@ void Error_Handler(void);
 
 /* Public macros -------------------------------------------------------------*/
 /** Blocks execution */
-#define STM32_LOCK_BLOCK() \
-    do {                   \
-        __disable_irq();   \
-        Error_Handler();   \
-        while (1)          \
-            ;              \
-    } while (0)
+#define STM32_LOCK_BLOCK()                      \
+  do                                            \
+  {                                             \
+    __disable_irq();                            \
+    Error_Handler();                            \
+    while (1);                                  \
+  } while (0)
 
 /** Blocks execution if argument is NULL */
-#define STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(x) \
-    do {                                     \
-        if ((x) == NULL) {                   \
-            STM32_LOCK_BLOCK();              \
-        }                                    \
-    } while (0)
+#define STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(x)    \
+  do                                            \
+  {                                             \
+    if ((x) == NULL)                            \
+    {                                           \
+      STM32_LOCK_BLOCK();                       \
+    }                                           \
+  } while (0)
 
 /** Blocks execution if in interrupt context */
 #define STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT() \
-    do {                                        \
-        if (__get_IPSR()) {                     \
-            STM32_LOCK_BLOCK();                 \
-        }                                       \
-    } while (0)
+  do                                            \
+  {                                             \
+    if (__get_IPSR())                           \
+    {                                           \
+      STM32_LOCK_BLOCK();                       \
+    }                                           \
+  } while (0)
 
 /** Hide unused parameter warning from compiler */
-#define STM32_LOCK_UNUSED(var) (void) var
+#define STM32_LOCK_UNUSED(var) (void)var
 
 /** Size of array */
 #define STM32_LOCK_ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
@@ -127,14 +131,13 @@ void Error_Handler(void);
 
 /* Private defines ---------------------------------------------------------*/
 /** Initialize members in instance of <code>LockingData_t</code> structure */
-#define LOCKING_DATA_INIT \
-    { 0, 0 }
+#define LOCKING_DATA_INIT { 0, 0 }
 
 /* Private typedef ---------------------------------------------------------*/
 typedef struct
 {
-    uint8_t flag;    /**< Backup of PRIMASK.PM at nesting level 0 */
-    uint8_t counter; /**< Nesting level */
+  uint8_t flag; /**< Backup of PRIMASK.PM at nesting level 0 */
+  uint8_t counter; /**< Nesting level */
 } LockingData_t;
 
 /* Private functions -------------------------------------------------------*/
@@ -143,43 +146,51 @@ typedef struct
   * @brief Initialize STM32 lock
   * @param lock The lock to init
   */
-static inline void stm32_lock_init(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    lock->flag = 0;
-    lock->counter = 0;
+static inline void stm32_lock_init(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  lock->flag = 0;
+  lock->counter = 0;
 }
 
 /**
   * @brief Acquire STM32 lock
   * @param lock The lock to acquire
   */
-static inline void stm32_lock_acquire(LockingData_t *lock) {
-    uint8_t flag = (uint8_t) (__get_PRIMASK() & 0x1); /* PRIMASK.PM */
-    __disable_irq();
-    __DSB();
-    __ISB();
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    if (lock->counter == 0) {
-        lock->flag = flag;
-    } else if (lock->counter == UINT8_MAX) {
-        STM32_LOCK_BLOCK();
-    }
-    lock->counter++;
+static inline void stm32_lock_acquire(LockingData_t *lock)
+{
+  uint8_t flag = (uint8_t)(__get_PRIMASK() & 0x1); /* PRIMASK.PM */
+  __disable_irq();
+  __DSB();
+  __ISB();
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  if (lock->counter == 0)
+  {
+    lock->flag = flag;
+  }
+  else if (lock->counter == UINT8_MAX)
+  {
+    STM32_LOCK_BLOCK();
+  }
+  lock->counter++;
 }
 
 /**
   * @brief Release STM32 lock
   * @param lock The lock to release
   */
-static inline void stm32_lock_release(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    if (lock->counter == 0) {
-        STM32_LOCK_BLOCK();
-    }
-    lock->counter--;
-    if (lock->counter == 0 && lock->flag == 0) {
-        __enable_irq();
-    }
+static inline void stm32_lock_release(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  if (lock->counter == 0)
+  {
+    STM32_LOCK_BLOCK();
+  }
+  lock->counter--;
+  if (lock->counter == 0 && lock->flag == 0)
+  {
+    __enable_irq();
+  }
 }
 
 #elif STM32_THREAD_SAFE_STRATEGY == 3
@@ -192,7 +203,7 @@ static inline void stm32_lock_release(LockingData_t *lock) {
 #define LOCKING_DATA_INIT 0
 
 /* Private typedef ---------------------------------------------------------*/
-typedef uint8_t LockingData_t; /**< Unused */
+typedef uint8_t LockingData_t;  /**< Unused */
 
 /* Private functions -------------------------------------------------------*/
 
@@ -200,26 +211,29 @@ typedef uint8_t LockingData_t; /**< Unused */
   * @brief Initialize STM32 lock
   * @param lock The lock to init
   */
-static inline void stm32_lock_init(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+static inline void stm32_lock_init(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
 }
 
 /**
   * @brief Acquire STM32 lock
   * @param lock The lock to acquire
   */
-static inline void stm32_lock_acquire(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
+static inline void stm32_lock_acquire(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
 }
 
 /**
   * @brief Release ST lock
   * @param lock The lock to release
   */
-static inline void stm32_lock_release(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
+static inline void stm32_lock_release(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
 }
 
 #elif STM32_THREAD_SAFE_STRATEGY == 4
@@ -231,29 +245,30 @@ static inline void stm32_lock_release(LockingData_t *lock) {
 #include <FreeRTOS.h>
 #include <task.h>
 
-#if defined(__GNUC__) && !defined(__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0
+#if defined (__GNUC__) && !defined (__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0
 #warning Please set configUSE_NEWLIB_REENTRANT to 1 in FreeRTOSConfig.h, otherwise newlib will not be thread-safe
 #endif /* defined (__GNUC__) && !defined (__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0 */
 
 /* Private defines ---------------------------------------------------------*/
 /** Initialize members in instance of <code>LockingData_t</code> structure */
-#define LOCKING_DATA_INIT \
-    { {0, 0}, 0 }
+#define LOCKING_DATA_INIT { {0, 0}, 0 }
 #define STM32_LOCK_MAX_NESTED_LEVELS 2 /**< Max nesting level of interrupts */
 typedef struct
 {
-    uint32_t basepri[STM32_LOCK_MAX_NESTED_LEVELS];
-    uint8_t nesting_level;
+  uint32_t basepri[STM32_LOCK_MAX_NESTED_LEVELS];
+  uint8_t nesting_level;
 } LockingData_t;
 
 /* Private macros ----------------------------------------------------------*/
 /** Blocks execution if reached max nesting level */
-#define STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock)                        \
-    do {                                                                   \
-        if (lock->nesting_level >= STM32_LOCK_ARRAY_SIZE(lock->basepri)) { \
-            STM32_LOCK_BLOCK();                                            \
-        }                                                                  \
-    } while (0)
+#define STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock)                   \
+  do                                                                  \
+  {                                                                   \
+    if (lock->nesting_level >= STM32_LOCK_ARRAY_SIZE(lock->basepri))  \
+    {                                                                 \
+      STM32_LOCK_BLOCK();                                             \
+    }                                                                 \
+  } while (0)
 
 /* Private functions -------------------------------------------------------*/
 
@@ -261,33 +276,37 @@ typedef struct
   * @brief Initialize STM32 lock
   * @param lock The lock to init
   */
-static inline void stm32_lock_init(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    for (size_t i = 0; i < STM32_LOCK_ARRAY_SIZE(lock->basepri); i++) {
-        lock->basepri[i] = 0;
-    }
-    lock->nesting_level = 0;
+static inline void stm32_lock_init(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  for (size_t i = 0; i < STM32_LOCK_ARRAY_SIZE(lock->basepri); i++)
+  {
+    lock->basepri[i] = 0;
+  }
+  lock->nesting_level = 0;
 }
 
 /**
   * @brief Acquire STM32 lock
   * @param lock The lock to acquire
   */
-static inline void stm32_lock_acquire(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock);
-    lock->basepri[lock->nesting_level++] = taskENTER_CRITICAL_FROM_ISR();
+static inline void stm32_lock_acquire(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock);
+  lock->basepri[lock->nesting_level++] = taskENTER_CRITICAL_FROM_ISR();
 }
 
 /**
   * @brief Release STM32 lock
   * @param lock The lock to release
   */
-static inline void stm32_lock_release(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    lock->nesting_level--;
-    STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock);
-    taskEXIT_CRITICAL_FROM_ISR(lock->basepri[lock->nesting_level]);
+static inline void stm32_lock_release(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  lock->nesting_level--;
+  STM32_LOCK_ASSERT_VALID_NESTING_LEVEL(lock);
+  taskEXIT_CRITICAL_FROM_ISR(lock->basepri[lock->nesting_level]);
 }
 
 #undef STM32_LOCK_ASSERT_VALID_NESTING_LEVEL
@@ -301,7 +320,7 @@ static inline void stm32_lock_release(LockingData_t *lock) {
 /* Includes ----------------------------------------------------------------*/
 #include <FreeRTOS.h>
 #include <task.h>
-#if defined(__GNUC__) && !defined(__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0
+#if defined (__GNUC__) && !defined (__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0
 #warning Please set configUSE_NEWLIB_REENTRANT to 1 in FreeRTOSConfig.h, otherwise newlib will not be thread-safe
 #endif /* defined (__GNUC__) && !defined (__CC_ARM) && configUSE_NEWLIB_REENTRANT == 0 */
 
@@ -310,7 +329,7 @@ static inline void stm32_lock_release(LockingData_t *lock) {
 #define LOCKING_DATA_INIT 0
 
 /* Private typedef ---------------------------------------------------------*/
-typedef uint8_t LockingData_t; /**< Unused */
+typedef uint8_t LockingData_t;  /**< Unused */
 
 /* Private functions -------------------------------------------------------*/
 
@@ -318,28 +337,31 @@ typedef uint8_t LockingData_t; /**< Unused */
   * @brief Initialize STM32 lock
   * @param lock The lock to init
   */
-static inline void stm32_lock_init(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+static inline void stm32_lock_init(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
 }
 
 /**
   * @brief Acquire STM32 lock
   * @param lock The lock to acquire
   */
-static inline void stm32_lock_acquire(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
-    vTaskSuspendAll();
+static inline void stm32_lock_acquire(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
+  vTaskSuspendAll();
 }
 
 /**
   * @brief Release STM32 lock
   * @param lock The lock to release
   */
-static inline void stm32_lock_release(LockingData_t *lock) {
-    STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
-    STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
-    xTaskResumeAll();
+static inline void stm32_lock_release(LockingData_t *lock)
+{
+  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
+  xTaskResumeAll();
 }
 
 #else
