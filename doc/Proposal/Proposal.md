@@ -4,8 +4,9 @@
 
 ### group
 
-1. People who have heart problems
-2. Athletes and seniors who needs to measure their heartrate
+Regular monitoring is essential for the health of the elderly because they are more prone to heart diseases. It's probable that many older people don't have the means or awareness to regularly monitor their heart rates. Arrhythmias and other cardiovascular conditions are serious problems for elderly persons, according to [12]. The ability to detect irregular heartbeats early and administer treatment right away thanks to continuous monitoring has the potential to save lives. This is mostly brought on by a dearth of user-friendly technology, issues with cost, and a general ignorance of the importance of periodic monitoring.
+
+Therefore, developing an easy-to-use heart rate monitor tailored for the elderly can address this gap and provide a much-needed solution. Our client will be aimed towards the elderly over the age of 65 in the Waterloo region, which is around 89,705 people[13]. It is important to note that approximately 80% of heart disease deaths occurs in people who are age 65 or older. [14]
 
 ### problem the group has
 
@@ -24,15 +25,15 @@
 
 ### Technical Requirements: 
 
-- battery with 5V output
-- GUI with 128*160 single-color bitmap display
-- buzzer that generate sound louder than 70db
-- red led indicator
+- Power outlet connected because the board cannot operate without electricity [15]
+- GUI with 128*160 single-color bitmap display [16]
+- buzzer that generate sound louder than 70dB but less than 85dB [17]
+- red led indicator [18]
 
 ### Safety Requirements: 
 
 - The maxium voltage this project will carry is no more than 5V [9]
-- The alarm must generate a sound of at least 70dB but not exceed 85dB.
+- The alarm must generate a sound of at least 70dB but not exceed 85dB. [17]
 
 ## Principles
 
@@ -71,3 +72,17 @@ Calculates a running average of the Inter-Beat Intervals (IBI) to determine the 
 [10] “Display Module ST7735 128x160 for STM32,” Amazon.ca. [Online]. Available: https://www.amazon.ca/Display-Module-ST7735-128x160-STM32/dp/B07BFV69DZ/ref=sr_1_5?crid=PPGK4P60DFAR&keywords=display+STM32&qid=1695173472&sprefix=display+stm32%2Caps%2C109&sr=8-5. [Accessed: Sep 19, 2023]
 
 [11] “Does Colour Really Affect Our Brain and Body? A Professor of Colour Science Explains,” ScienceAlert. [Online]. Available: https://www.sciencealert.com/does-colour-really-affect-our-brain-and-body-a-professor-of-colour-science-explains. [Accessed: Sep 19, 2023]
+
+[12] World Health Organization, "Cardiovascular diseases (CVDs)," WHO, [Online]. Available: https://www.who.int/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds). [Accessed: Sep. 28, 2023]. 
+
+[13] Author(s) Name (if provided), "Understanding Heart Aging and Reversing Heart Disease," Verywell Health, [Online]. Available: https://www.verywellhealth.com/understanding-heart-aging-and-reversing-heart-disease-2224231. [Accessed: Sep. 28, 2023]. 
+
+[14] Statistics Canada, "Census Profile, 2021 Census," StatCan, [Online]. Available: https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/page.cfm?Lang=E&DGUIDlist=2021S0503541&GENDERlist=1&STATISTIClist=1&HEADERlist=0. [Accessed: Sep. 28, 2023].
+
+[15] “STM32 Nucleo-F401RE Pinout, Specs & Datasheet - Components101,” Components101. [Online]. Available: https://components101.com/microcontrollers/stm32-nucleo-f401re-pinout-datasheet. [Accessed: Sep. 28, 2023].
+
+[16] “Top 15+ Microcontroller Projects | Microcontroller Project Ideas,” Electronics For You. [Online]. Available: https://www.electronicsforu.com/microcontroller-projects-ideas. [Accessed: Sep. 28, 2023].
+
+[17] “How much sound can your ears safely take? And for how long? | NCEH | CDC,” Centers for Disease Control and Prevention. [Online]. Available: https://www.cdc.gov/nceh/hearing_loss/toolkit/quiz-test.html. [Accessed: Sep. 28, 2023].
+
+[18] “Why are danger signals red when the eye is most sensitive to yellow and green?,” Quora. [Online]. Available: https://www.quora.com/Why-are-danger-signals-red-when-the-eye-is-most-sensitive-to-yellow-and-green. [Accessed: Sep. 28, 2023].
