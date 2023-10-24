@@ -23,26 +23,48 @@ Therefore, developing an easy-to-use heart rate monitor tailored for the elderly
 3. Doctors
     They will be able to recommend the product to the users after they verified the reliability of the product since they are the experts in the field of heart diseases.
 
-## Initial requirement
+## Initial Requirement
 
-### Functional Requirements: 
+### Functional Requirements:
 
-- Use the pulse sensor to measure the infrared light (~<780nm) emitted by human body from heartbeat [6]
-- A single-color 128*160 display for displaying information [10]
-- Sound alarm with buzzer since people are more sensitive to sound stimulus [8]
-- abnormal heartrate indicator with red LED since people are more sensitive to red light than lights of other color[11]
+- **Pulse Sensor**: 
+  - Measure the infrared light (~<780nm) emitted by the human body from heartbeat [6].
+  - Display the heart rate in BPM (Beats Per Minute) on the screen.
+   
+- **Display**:
+  - A single-color 128x160 display for displaying the heart rate and any alerts or notifications [10].
+  - The display should show real-time heart rate, abnormal heart rate warnings, and battery status.
+   
+- **Sound Alarm**:
+  - Emit an audible alarm when abnormal heart rates are detected.
+  - The alarm should have a volume range between 70dB to 85dB, ensuring it's loud enough to alert the user but not too loud to cause discomfort [8].
+   
+- **LED Indicator**:
+  - Illuminate a red LED when abnormal heart rates are detected, serving as a visual alert [11].
+  - The LED should blink at a frequency of 1Hz during alerts.
 
-### Technical Requirements: 
+### Technical Requirements:
 
-- Power outlet connected because the board cannot operate without electricity [15]
-- GUI with 128*160 single-color bitmap display [16]
-- buzzer that generate sound louder than 70dB but less than 85dB [17]
-- red led indicator [18]
+- **Pulse Sensor**:
+  - Response time: The sensor should detect and relay heart rate changes within 2 seconds.
+  - Sensitivity: The sensor should detect heart rates in the range of 40-180 BPM.
+   
+- **Display**:
+  - GUI with 128x160 single-color bitmap display [16].
+  - Refresh rate: The display should update at least every second to show real-time data.
+   
+- **Sound Alarm**:
+  - Buzzer frequency: The buzzer should operate in the frequency range of 2kHz to 4kHz, which is easily audible to the human ear [17].
+  - Volume control: The alarm should have adjustable volume settings.
+   
+- **LED Indicator**:
+  - Luminosity: The red LED should have a luminosity between 50-150 mcd (millicandela) [18].
+  - Power consumption: The LED should consume no more than 20mA when illuminated.
 
-### Safety Requirements: 
+### Safety Requirements:
 
-- The maxium voltage this project will carry is no more than 5V [9]
-- The alarm must generate a sound of at least 70dB but not exceed 85dB. [17]
+- The maximum voltage this project will carry is no more than 5V [9].
+- The alarm must generate a sound of at least 70dB but not exceed 85dB [17].
 
 ## Principles
 
