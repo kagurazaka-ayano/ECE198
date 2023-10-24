@@ -11,8 +11,17 @@ Therefore, developing an easy-to-use heart rate monitor tailored for the elderly
 ### problem the group has
 
 1. As study showned by WHO[1, Para 2], cardiovascular diseases has became a serious problem and has caused 32% of all global deaths
-2. Athletes and seniors needs to keep track their cardiovascolar efficiency to measure their health condition[2, Para 8]
+2. Seniors needs to keep track their cardiovascolar efficiency to measure their health condition[2, Para 8]
 3. People with heart problems need to keep track of their heart rate to detect irregular heartbeats[3, Para 4]
+
+### stakeholders
+
+1. Seniors over the age of 65 in the Waterloo region
+    They are the main users of the product. They will be able to use the product to monitor their heart rate and detect irregular heartbeats.
+2. Family members of seniors over the age of 65 in the Waterloo region
+    They are the secondary users of the product. They will be able to use the product to monitor the heart rate of their family members and detect irregular heartbeats.
+3. Doctors
+    They will be able to recommend the product to the users after they verified the reliability of the product since they are the experts in the field of heart diseases.
 
 ## Initial requirement
 
