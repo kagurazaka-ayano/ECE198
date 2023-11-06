@@ -1,3 +1,6 @@
 [submodule "project/dependencies/openocd-esp32"]
 	path = project/dependencies/openocd-esp32
 	url = https://github.com/espressif/openocd-esp32.git
+[submodule "project/dependencies/Arduino_GFX"]
+	path = project/dependencies/Arduino_GFX
+	url = https://github.com/moononournation/Arduino_GFX.git

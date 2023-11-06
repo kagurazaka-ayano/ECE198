@@ -104,7 +104,8 @@ The recommended building platform and IDE is [CLion](https://www.jetbrains.com/c
 
 ![clion](./readme_res/SCR-20231027-cmck.png)
 
-To build the project, choose and add the build option `OCD Project` and relaunch the project to make the predefined options to appear
+To build the project, choose and add the build option `OCD Project` and relaunch the project to make the predefined
+options to appear
 
 ![build](./readme_res/SCR-20231027-crna.png)
 
