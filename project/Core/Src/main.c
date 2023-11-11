@@ -90,11 +90,11 @@ int main(void)
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
 
+  // init and test the display
   ST7735_Init(0);
   fillScreen(BLACK);
   testAll();
   HAL_Delay(1000);
-
 
   /* USER CODE END 2 */
 
@@ -105,26 +105,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-
-        ST7735_SetRotation(0);
-        ST7735_WriteString(0, 0, "HELLO", Font_11x18, RED, BLACK);
-        HAL_Delay(1000);
-        fillScreen(BLACK);
-
-        ST7735_SetRotation(1);
-        ST7735_WriteString(0, 0, "WORLD", Font_11x18, GREEN, BLACK);
-        HAL_Delay(1000);
-        fillScreen(BLACK);
-
-        ST7735_SetRotation(2);
-        ST7735_WriteString(0, 0, "FROM", Font_11x18, BLUE, BLACK);
-        HAL_Delay(1000);
-        fillScreen(BLACK);
-
-        ST7735_SetRotation(3);
-        ST7735_WriteString(0, 0, "ControllersTech", Font_16x26, YELLOW, BLACK);
-        HAL_Delay(1000);
-        fillScreen(BLACK);
     }
   /* USER CODE END 3 */
 }
