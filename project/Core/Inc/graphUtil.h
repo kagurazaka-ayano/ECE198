@@ -9,8 +9,8 @@
 #ifndef PROJECT_GRAPHUTIL_H
 #define PROJECT_GRAPHUTIL_H
 
-#include "consts.h"
 #include "ST7735.h"
+#include "consts.h"
 
 /**
  * @brief a Point class
@@ -22,7 +22,7 @@ typedef struct {
     Coord y;
     // whether this Point is a screen coord(only for quality of life purpose)
     Boolean is_screen_coord;
-}Point;
+} Point;
 
 
 /**
@@ -37,7 +37,7 @@ typedef struct {
     Coord height;
     // origin pos of area, this is only used for plotting functions
     Point graph_origin_pos;
-}GraphArea;
+} GraphArea;
 
 /**
  * @brief translate the screen coord to area coord
@@ -46,7 +46,7 @@ typedef struct {
  * @param x_out translated x area coord pointer
  * @param y_out translated y area coord pointer
  */
-void coordScreen2Area(GraphArea area, Point screen_coord, Point* area_coord_out);
+void coordScreen2Area(GraphArea area, Point screen_coord, Point *area_coord_out);
 
 /**
  * @brief translate the area coord to screen coord
@@ -56,7 +56,7 @@ void coordScreen2Area(GraphArea area, Point screen_coord, Point* area_coord_out)
  * @param x_out translated x coord pointer
  * @param y_out translated y coord pointer
  */
-void coordArea2Screen(GraphArea area, Point area_coord, Point* screen_coord_out);
+void coordArea2Screen(GraphArea area, Point area_coord, Point *screen_coord_out);
 
 /**
  * @brief plot a scatter plot in given graphing area
@@ -64,9 +64,6 @@ void coordArea2Screen(GraphArea area, Point area_coord, Point* screen_coord_out)
  * @param area_coord point to plot in screen coord
  */
 void plotScatter(GraphArea area, Point area_coord);
-
-
-
 
 
 #endif//PROJECT_GRAPHUTIL_H

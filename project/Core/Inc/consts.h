@@ -38,5 +38,11 @@ typedef uint8_t Boolean;
 #define LARGE_FONT_H 26
 /***** screen consts end *****/
 
+/***** part consts start *****/
+
+#define PORT_LED_OUT GPIOC
+#define PIN_LED_OUT GPIO_PIN_0
+
+/***** part consts end *****/
 
 #endif//PROJECT_CONSTS_H
