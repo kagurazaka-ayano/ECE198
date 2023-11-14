@@ -21,6 +21,7 @@ extern FontDef Font_16x26;
 typedef uint8_t Coord;
 typedef unsigned int Color;
 typedef uint8_t Boolean;
+typedef uint32_t Reading;
 
 /***** type define end *****/
 
@@ -44,5 +45,19 @@ typedef uint8_t Boolean;
 #define PIN_LED_OUT GPIO_PIN_0
 
 /***** part consts end *****/
+
+/***** measurement consts start *****/
+
+#define SAMPLING_INTERVAL_MS 500
+#define SAMPLING_RATE (1e3 / SAMPLING_INTERVAL_MS)
+// this should be power of 2
+#define DATA_CAPACITY 128
+// tbd based on sensor data
+#define HYSTERESIS_INIT_UPPER_THRESHOLD 400
+#define HYSTERESIS_INIT_LOWER_THRESHOLD 300
+// - 1 because we exclude the data at the data_pointer
+#define RUNNING_AVG_INTERVAL ((DATA_CAPACITY >> 5) - 1)
+
+/***** measurement consts end *****/
 
 #endif//PROJECT_CONSTS_H
