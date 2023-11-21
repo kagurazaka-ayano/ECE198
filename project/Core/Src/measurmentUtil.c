@@ -60,13 +60,16 @@ void addData(Reading data, DataArray * avg_out){
 }
 
 void updatePeakValley(DataArray *data_out){
-    memset(data_out->peak_mark, false, DATA_CAPACITY);
-    memset(data_out->valley_mark, false, DATA_CAPACITY);
+    smoothen(data_out, OPTIMAL_SMOOTHEN_ITERATION);
     uint8_t data_count = data_out->filled ? DATA_CAPACITY : data_out->data_pointer;
     uint16_t interval_len_ms = (data_count - 1) * SAMPLING_INTERVAL_MS;
     uint8_t peak_cnt = 0, valley_cnt = 0;
-    smoothen(data_out, OPTIMAL_SMOOTHEN_ITERATION);
-    int* diff_arr = malloc(data_count);
+
+    int* diff_arr = malloc(data_count * sizeof(int));
+    if (diff_arr == NULL) {
+        // Handle memory allocation error
+        return;
+    }
     diff_arr[data_count - 1] = 0;
 
     // get sgn of difference
@@ -76,25 +79,33 @@ void updatePeakValley(DataArray *data_out){
 
     // remove zero according to the neighboring node
     for (int i = 0; i < data_count - 1; ++i) {
-        // because no diff data at data_count - 1
         if (i == data_count - 2)
             diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i - 1]);
         else
             diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i + 1]);
     }
 
+    int last_peak_val = INT_MIN;
+    int last_valley_val = INT_MAX;
+
     for (int i = 0; i < data_count - 1; ++i){
-        // if it's 1 then -1, it's a turning pt
         int next = i == data_count - 2 ? -1 : 1;
         if (diff_arr[i] - diff_arr[i + next] == 2){
-            peak_cnt++;
-            data_out->peak_mark[i] = true;
+            if (data_out->data_smoothened[i] > last_peak_val + HYSTERESIS_UPPER_THRESHOLD) {
+                last_peak_val = data_out->data_smoothened[i];
+                peak_cnt++;
+                data_out->peak_mark[i] = true;
+            }
         }
         else if(diff_arr[i + next] - diff_arr[i] == 2) {
-            valley_cnt++;
-            data_out->valley_mark[i] = true;
+            if (data_out->data_smoothened[i] < last_valley_val + HYSTERESIS_LOWER_THRESHOLD) {
+                last_valley_val = data_out->data_smoothened[i];
+                valley_cnt++;
+                data_out->valley_mark[i] = true;
+            }
         }
     }
+
     free(diff_arr);
 }
 
