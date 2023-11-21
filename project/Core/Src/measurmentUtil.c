@@ -7,6 +7,7 @@
 */
 
 #include "measurmentUtil.h"
+#include <limits.h> 
 
 void smoothen(DataArray* avg_out, uint8_t smoothen_iteration) {
     int end = avg_out->data_pointer;
@@ -59,17 +60,17 @@ void addData(Reading data, DataArray * avg_out){
     if(data < avg_out->min && within_inc(data, DATA_LOWER_LIMIT, DATA_UPPER_LIMIT)) avg_out->min = data;
 }
 
+#define HYSTERESIS_UPPER_THRESHOLD 10
+#define HYSTERESIS_LOWER_THRESHOLD -10
+
 void updatePeakValley(DataArray *data_out){
-    smoothen(data_out, OPTIMAL_SMOOTHEN_ITERATION);
+    memset(data_out->peak_mark, false, DATA_CAPACITY);
+    memset(data_out->valley_mark, false, DATA_CAPACITY);
     uint8_t data_count = data_out->filled ? DATA_CAPACITY : data_out->data_pointer;
     uint16_t interval_len_ms = (data_count - 1) * SAMPLING_INTERVAL_MS;
     uint8_t peak_cnt = 0, valley_cnt = 0;
-
-    int* diff_arr = malloc(data_count * sizeof(int));
-    if (diff_arr == NULL) {
-        // Handle memory allocation error
-        return;
-    }
+    smoothen(data_out, OPTIMAL_SMOOTHEN_ITERATION);
+    int* diff_arr = malloc(data_count);
     diff_arr[data_count - 1] = 0;
 
     // get sgn of difference
@@ -78,14 +79,7 @@ void updatePeakValley(DataArray *data_out){
     }
 
     // remove zero according to the neighboring node
-    for (int i = 0; i < data_count - 1; ++i) {
-        if (i == data_count - 2)
-            diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i - 1]);
-        else
-            diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i + 1]);
-    }
-
-    int last_peak_val = INT_MIN;
+     int last_peak_val = INT_MIN;
     int last_valley_val = INT_MAX;
 
     for (int i = 0; i < data_count - 1; ++i){
@@ -105,7 +99,6 @@ void updatePeakValley(DataArray *data_out){
             }
         }
     }
-
     free(diff_arr);
 }
 
