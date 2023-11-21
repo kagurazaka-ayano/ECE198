@@ -22,6 +22,8 @@ typedef uint8_t Coord;
 typedef unsigned int Color;
 typedef uint8_t Boolean;
 typedef uint32_t Reading;
+#define true 1
+#define false 0
 
 /***** type define end *****/
 
@@ -50,14 +52,21 @@ typedef uint32_t Reading;
 
 #define SAMPLING_INTERVAL_MS 500
 #define SAMPLING_RATE (1e3 / SAMPLING_INTERVAL_MS)
+#define FULL_SAMPLING_INTERVAL_MS (SAMPLING_INTERVAL_MS * DATA_CAPACITY - 1)
 // this should be power of 2
-#define DATA_CAPACITY 128
-// tbd based on sensor data
+// the optimal value is SCREEN_W (screen width in pixel) because when it comes to plotting this is the screen width
+// each datapoint can occupy exactly a pixel
+#define DATA_CAPACITY SCREEN_W
+// TODO: tbd based on sensor data
 #define HYSTERESIS_INIT_UPPER_THRESHOLD 400
 #define HYSTERESIS_INIT_LOWER_THRESHOLD 300
+// TODO: tbd based on sensor data
+#define DATA_UPPER_LIMIT 500
+#define DATA_LOWER_LIMIT 200
 // - 1 because we exclude the data at the data_pointer
 #define RUNNING_AVG_INTERVAL ((DATA_CAPACITY >> 5) - 1)
-
+// TODO: determine the best iteration count of smoothening
+#define OPTIMAL_SMOOTHEN_ITERATION 8
 /***** measurement consts end *****/
 
 #endif//PROJECT_CONSTS_H

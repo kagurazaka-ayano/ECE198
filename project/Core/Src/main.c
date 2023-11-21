@@ -112,7 +112,7 @@ int main(void) {
         HAL_ADC_Start(&hadc1);
         HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
         raw = HAL_ADC_GetValue(&hadc1);
-        char* buffer[1024];
+        char buffer[1024];
         memset(buffer, '\0', 1024);
         itoa(raw, buffer, 10);
         ST7735_WriteString(0, 0, buffer, Font_16x26, WHITE, BLACK);
