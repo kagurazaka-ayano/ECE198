@@ -28,7 +28,6 @@ typedef struct {
 } Point;
 
 
-
 /**
  * @brief area for a graph to be plotted
  */
@@ -43,10 +42,6 @@ typedef struct {
     Point graph_origin_pos;
 } GraphArea;
 
-
-
-
-void makeGraphArea(GraphArea* area, Coord width, Coord height, Point upper_left, void *graph_origin_pos);
 
 /**
  * @brief translate the screen coord to area coord
@@ -74,8 +69,12 @@ void coordArea2Screen(GraphArea area, Point area_coord, Point *screen_coord_out)
  */
 void plotScatter(GraphArea area, Point area_coord);
 
+void plotData(DataArray *data, GraphArea area);
 
+void writeString(char *buffer, Point coord, GraphArea area, Color color, Color bg_color, FontDef font);
 
-void plotData(DataArray* data, GraphArea area);
+void writeInt(int val, Point coord, GraphArea area, Color color, Color bg_color, FontDef font);
+
+void plotRawData(DataArray data, GraphArea area);
 
 #endif//PROJECT_GRAPHUTIL_H

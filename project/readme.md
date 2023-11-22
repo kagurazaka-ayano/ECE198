@@ -2,28 +2,28 @@
 
 ## buzzer
 
-- IN       -> 5V
-- OUT      -> PC10
+- IN -> 5V
+- OUT -> PC10
 
 ## LED
 
-- IN       -> PC0
-- OUT      -> GND
+- IN -> PC0
+- OUT -> GND
 
 ## PULSE
 
-- OUT      -> PA0
+- OUT -> PA0
 
 ## DISPLAY
 
- - VCC     -> 3v3
- - GND     -> GND
- - CS      -> PC1
- - RESET   -> PA4
- - A0      -> PB0
- - SDA     -> PC3
- - SCK     -> PB10
- - LED     -> 3v3
+- VCC -> 3v3
+- GND -> GND
+- CS -> PC1
+- RESET -> PA4
+- A0 -> PB0
+- SDA -> PC3
+- SCK -> PB10
+- LED -> 3v3
 
 # Building and debugging instructions
 

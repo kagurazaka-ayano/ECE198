@@ -16,7 +16,6 @@
 #include <string.h>
 
 
-
 /**
  * @brief the measured data
  * @param data data smoothened by running average
@@ -48,26 +47,26 @@ typedef struct {
  * @remark This will set the data at data_pointer to be the running avg of the raw data with interval n
  * @remark And this will smoothen the curve at the data_pointer position
  */
-void getRunningAvg(DataArray* avg_out, uint8_t n, Boolean reiterate);
+void getRunningAvg(DataArray *avg_out, uint8_t n, Boolean reiterate);
 
 /**
  * @brief add a data point to the DataArray object
  * @param data data reading
  * @param avg_out DataArray object given to add
  */
-void addData(Reading data, DataArray* avg_out);
+void addData(Reading data, DataArray *avg_out);
 
 /**
  * @brief smoothen the data with running avg
  * @param avg_out reference to data pending smoothen
  */
-void smoothen(DataArray* avg_out, uint8_t smoothen);
+void smoothen(DataArray *avg_out, uint8_t smoothen);
 
 /**
  * @brief update the data to find valley and peak
  * @param data_out pointer to data given and to be modified
  */
-void updatePeakValley(DataArray* data_out);
+void updatePeakValley(DataArray *data_out);
 
 /**
  * @brief get bpm from a measured data
@@ -76,6 +75,6 @@ void updatePeakValley(DataArray* data_out);
  */
 int getBPM(DataArray data);
 
-void makeData(DataArray* data_out);
+void makeData(DataArray *data_out);
 
 #endif//PROJECT_DATAUTIL_H

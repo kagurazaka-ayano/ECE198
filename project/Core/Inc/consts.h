@@ -50,7 +50,7 @@ typedef uint32_t Reading;
 
 /***** measurement consts start *****/
 
-#define SAMPLING_INTERVAL_MS 500
+#define SAMPLING_INTERVAL_MS 50
 #define SAMPLING_RATE (1e3 / SAMPLING_INTERVAL_MS)
 #define FULL_SAMPLING_INTERVAL_MS (SAMPLING_INTERVAL_MS * DATA_CAPACITY - 1)
 // this should be power of 2
@@ -61,14 +61,13 @@ typedef uint32_t Reading;
 #define HYSTERESIS_UPPER_THRESHOLD (10)
 #define HYSTERESIS_LOWER_THRESHOLD (-10)
 // TODO: tbd based on sensor data
-#define DATA_UPPER_LIMIT 320
-#define DATA_LOWER_LIMIT 450
+#define DATA_UPPER_LIMIT 60
+#define DATA_LOWER_LIMIT 95
 // - 1 because we exclude the data at the data_pointer
 #define RUNNING_AVG_INTERVAL ((DATA_CAPACITY >> 4) - 1)
 // TODO: determine the best iteration count of smoothening
-#define OPTIMAL_SMOOTHEN_ITERATION 8
+#define OPTIMAL_SMOOTHEN_ITERATION 4
 /***** measurement consts end *****/
-
 
 
 #endif//PROJECT_CONSTS_H
