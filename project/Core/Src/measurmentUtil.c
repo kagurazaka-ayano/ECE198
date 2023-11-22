@@ -109,3 +109,5 @@ int getBPM(DataArray data){
     }
     return (peak - 1) / s2m(ms2s(interval_len_ms));
 }
+
+
