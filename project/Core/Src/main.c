@@ -137,14 +137,11 @@ int main(void) {
         HAL_ADC_Start(&hadc1);
         HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
         raw = HAL_ADC_GetValue(&hadc1);
-        char buffer[1024];
-        memset(buffer, '\0', 1024);
-        itoa(raw, buffer, 10);
-        writeString(buffer, HALF_LEFT_ORIGIN, LOWER_HALF_SCREEN_AREA, WHITE, BLACK, MEDIUM_FONT);
-        addData(raw, &data_arr);
-        for (int i = 0; i < data_arr.data_pointer; ++i) {
-            ST7735_DrawPixel(i, normalizeY(data_arr.data_raw[i], DATA_UPPER_LIMIT, DATA_LOWER_LIMIT), WHITE);
-        }
+        writeInt(raw, UPPER_LEFT_ORIGIN, FULL_SCREEN_AREA, WHITE, BLACK, MEDIUM_FONT);
+        //        addData(raw, &data_arr);
+//        for (int i = 0; i < data_arr.data_pointer; ++i) {
+//            ST7735_DrawPixel(i, normalizeY(data_arr.data_raw[i], DATA_UPPER_LIMIT, DATA_LOWER_LIMIT), WHITE);
+//        }
         HAL_Delay(SAMPLING_INTERVAL_MS);
         fillScreen(BLACK);
     }

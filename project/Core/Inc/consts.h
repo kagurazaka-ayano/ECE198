@@ -50,7 +50,7 @@ typedef uint32_t Reading;
 
 /***** measurement consts start *****/
 
-#define SAMPLING_INTERVAL_MS 50
+#define SAMPLING_INTERVAL_MS 250
 #define SAMPLING_RATE (1e3 / SAMPLING_INTERVAL_MS)
 #define FULL_SAMPLING_INTERVAL_MS (SAMPLING_INTERVAL_MS * DATA_CAPACITY - 1)
 // this should be power of 2
