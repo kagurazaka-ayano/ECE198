@@ -133,6 +133,7 @@ int main(void) {
         GPIO_PinState state;
         state = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
         HAL_GPIO_WritePin(BUZZER_OUT_GPIO_Port, BUZZER_OUT_Pin, state);
+        HAL_GPIO_WritePin(LED_OUT_GPIO_Port, LED_OUT_Pin, !state);
         HAL_ADC_Start(&hadc1);
         HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
         raw = HAL_ADC_GetValue(&hadc1);
@@ -141,7 +142,9 @@ int main(void) {
         itoa(raw, buffer, 10);
         writeString(buffer, HALF_LEFT_ORIGIN, LOWER_HALF_SCREEN_AREA, WHITE, BLACK, MEDIUM_FONT);
         addData(raw, &data_arr);
-        plotData(&data_arr, UPPER_HALF_SCREEN_AREA);
+        for (int i = 0; i < data_arr.data_pointer; ++i) {
+            ST7735_DrawPixel(i, normalizeY(data_arr.data_raw[i], DATA_UPPER_LIMIT, DATA_LOWER_LIMIT), WHITE);
+        }
         HAL_Delay(SAMPLING_INTERVAL_MS);
         fillScreen(BLACK);
     }

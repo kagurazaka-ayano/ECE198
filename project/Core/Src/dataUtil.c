@@ -29,7 +29,7 @@ void smoothen(DataArray *avg_out, uint8_t smoothen_iteration) {
     }
     for (int j = 0; j < smoothen_iteration; j++) {
         for (int i = 0; i <= end; ++i) {
-            getRunningAvg(avg_out, RUNNING_AVG_INTERVAL, false);
+            getRunningAvg(avg_out, RUNNING_AVG_INTERVAL, true);
         }
     }
 }

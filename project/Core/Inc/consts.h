@@ -18,7 +18,7 @@ extern FontDef Font_16x26;
 
 /***** type define start *****/
 
-typedef uint8_t Coord;
+typedef uint16_t Coord;
 typedef unsigned int Color;
 typedef uint8_t Boolean;
 typedef uint32_t Reading;
@@ -61,8 +61,8 @@ typedef uint32_t Reading;
 #define HYSTERESIS_UPPER_THRESHOLD (10)
 #define HYSTERESIS_LOWER_THRESHOLD (-10)
 // TODO: tbd based on sensor data
-#define DATA_UPPER_LIMIT 60
-#define DATA_LOWER_LIMIT 95
+#define DATA_UPPER_LIMIT 4000
+#define DATA_LOWER_LIMIT 100
 // - 1 because we exclude the data at the data_pointer
 #define RUNNING_AVG_INTERVAL ((DATA_CAPACITY >> 4) - 1)
 // TODO: determine the best iteration count of smoothening

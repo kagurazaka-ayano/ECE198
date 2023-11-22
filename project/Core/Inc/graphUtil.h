@@ -14,6 +14,8 @@
 #include "ST7735.h"
 #include "consts.h"
 #include "dataUtil.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
  * @brief a Point class
@@ -75,6 +77,10 @@ void writeString(char *buffer, Point coord, GraphArea area, Color color, Color b
 
 void writeInt(int val, Point coord, GraphArea area, Color color, Color bg_color, FontDef font);
 
+void writeDouble(double val, Point coord, GraphArea area, Color color, Color bg_color, FontDef font);
+
 void plotRawData(DataArray data, GraphArea area);
+
+int normalizeY(Coord val, Coord max_val, Coord min_val);
 
 #endif//PROJECT_GRAPHUTIL_H
