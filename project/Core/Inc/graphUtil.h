@@ -6,11 +6,14 @@
  * @brief utils used in producing a graph
 */
 
+#pragma once
+
 #ifndef PROJECT_GRAPHUTIL_H
 #define PROJECT_GRAPHUTIL_H
 
 #include "ST7735.h"
 #include "consts.h"
+#include "dataUtil.h"
 
 /**
  * @brief a Point class
@@ -25,12 +28,13 @@ typedef struct {
 } Point;
 
 
+
 /**
  * @brief area for a graph to be plotted
  */
 typedef struct {
     // upper left coord of area
-    Coord upper_left;
+    Point upper_left;
     // area width
     Coord width;
     // area height
@@ -38,6 +42,11 @@ typedef struct {
     // origin pos of area, this is only used for plotting functions
     Point graph_origin_pos;
 } GraphArea;
+
+
+
+
+void makeGraphArea(GraphArea* area, Coord width, Coord height, Point upper_left, void *graph_origin_pos);
 
 /**
  * @brief translate the screen coord to area coord
@@ -59,11 +68,14 @@ void coordScreen2Area(GraphArea area, Point screen_coord, Point *area_coord_out)
 void coordArea2Screen(GraphArea area, Point area_coord, Point *screen_coord_out);
 
 /**
- * @brief plot a scatter plot in given graphing area
+ * @brief plot one point in the given area
  * @param area graphing area
  * @param area_coord point to plot in screen coord
  */
 void plotScatter(GraphArea area, Point area_coord);
 
+
+
+void plotData(DataArray* data, GraphArea area);
 
 #endif//PROJECT_GRAPHUTIL_H

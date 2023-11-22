@@ -6,11 +6,12 @@
  * @brief
 */
 
-#ifndef PROJECT_MEASURMENTUTIL_H
-#define PROJECT_MEASURMENTUTIL_H
+#ifndef PROJECT_DATAUTIL_H
+#define PROJECT_DATAUTIL_H
 
 #include "consts.h"
 #include "mathUtils.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -75,5 +76,6 @@ void updatePeakValley(DataArray* data_out);
  */
 int getBPM(DataArray data);
 
+void makeData(DataArray* data_out);
 
-#endif//PROJECT_MEASURMENTUTIL_H
+#endif//PROJECT_DATAUTIL_H

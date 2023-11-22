@@ -33,6 +33,9 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "GFX_FUNCTIONS.h"
 #include "ST7735.h"
+#include "dataUtil.h"
+#include "graphUtil.h"
+#include "mathUtils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,8 +70,6 @@ void Error_Handler(void);
 #define LED_OUT_GPIO_Port GPIOC
 #define PC1_SPI2_CS0_Pin GPIO_PIN_1
 #define PC1_SPI2_CS0_GPIO_Port GPIOC
-#define PULSE_IN_Pin GPIO_PIN_0
-#define PULSE_IN_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3

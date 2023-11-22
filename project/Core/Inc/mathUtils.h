@@ -9,7 +9,6 @@
 #ifndef PROJECT_MATHUTILS_H
 #define PROJECT_MATHUTILS_H
 
-#include <math.h>
 #define max(x, y) ((x) > (y) ? (x) : (y))
 #define min(x, y) ((x) < (y) ? (x) : (y))
 #define sgn(x) (((x) > 0) ? ((x) == 0 ? 0 : 1) : -1)
