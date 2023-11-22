@@ -7,6 +7,7 @@
 */
 
 #include "measurmentUtil.h"
+#include <limits.h> 
 
 void smoothen(DataArray* avg_out, uint8_t smoothen_iteration) {
     int end = avg_out->data_pointer;
@@ -59,6 +60,9 @@ void addData(Reading data, DataArray * avg_out){
     if(data < avg_out->min && within_inc(data, DATA_LOWER_LIMIT, DATA_UPPER_LIMIT)) avg_out->min = data;
 }
 
+#define HYSTERESIS_UPPER_THRESHOLD 10
+#define HYSTERESIS_LOWER_THRESHOLD -10
+
 void updatePeakValley(DataArray *data_out){
     memset(data_out->peak_mark, false, DATA_CAPACITY);
     memset(data_out->valley_mark, false, DATA_CAPACITY);
@@ -75,24 +79,24 @@ void updatePeakValley(DataArray *data_out){
     }
 
     // remove zero according to the neighboring node
-    for (int i = 0; i < data_count - 1; ++i) {
-        // because no diff data at data_count - 1
-        if (i == data_count - 2)
-            diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i - 1]);
-        else
-            diff_arr[i] = sgn_remove_zero(diff_arr[i], diff_arr[i + 1]);
-    }
+     int last_peak_val = INT_MIN;
+    int last_valley_val = INT_MAX;
 
     for (int i = 0; i < data_count - 1; ++i){
-        // if it's 1 then -1, it's a turning pt
         int next = i == data_count - 2 ? -1 : 1;
         if (diff_arr[i] - diff_arr[i + next] == 2){
-            peak_cnt++;
-            data_out->peak_mark[i] = true;
+            if (data_out->data_smoothened[i] > last_peak_val + HYSTERESIS_UPPER_THRESHOLD) {
+                last_peak_val = data_out->data_smoothened[i];
+                peak_cnt++;
+                data_out->peak_mark[i] = true;
+            }
         }
         else if(diff_arr[i + next] - diff_arr[i] == 2) {
-            valley_cnt++;
-            data_out->valley_mark[i] = true;
+            if (data_out->data_smoothened[i] < last_valley_val + HYSTERESIS_LOWER_THRESHOLD) {
+                last_valley_val = data_out->data_smoothened[i];
+                valley_cnt++;
+                data_out->valley_mark[i] = true;
+            }
         }
     }
     free(diff_arr);
